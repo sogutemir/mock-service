@@ -523,23 +523,10 @@ To check the application status:
 curl http://localhost:8081/docs/health
 ```
 
-## 📞 Support
-
-- **Email**: support@example.com
-- **GitHub Issues**: [Project Issues](https://github.com/your-repo/mock-microservices/issues)
-- **Documentation**: [http://localhost:8081/docs/](http://localhost:8081/docs/)
-
 ## 📄 License
 
 This project is licensed under the MIT License. See the `LICENSE` file for details.
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
 
 ---
 
