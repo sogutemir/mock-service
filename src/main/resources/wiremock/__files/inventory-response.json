@@ -1,0 +1,7 @@
+{
+  "productId": "PROD-001",
+  "quantity": 150,
+  "reserved": 10,
+  "available": 140,
+  "lastUpdated": "2023-01-01T09:00:00Z"
+}

@@ -1,0 +1,10 @@
+{
+  "period": "daily",
+  "date": "2023-01-01",
+  "metrics": {
+    "totalOrders": 45,
+    "totalRevenue": 2250.75,
+    "uniqueUsers": 38,
+    "averageOrderValue": 50.02
+  }
+}

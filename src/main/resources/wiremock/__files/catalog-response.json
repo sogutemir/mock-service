@@ -1,0 +1,14 @@
+{
+  "categories": [
+    {
+      "id": "CAT-001",
+      "name": "Electronics",
+      "productCount": 150
+    },
+    {
+      "id": "CAT-002",
+      "name": "Clothing",
+      "productCount": 200
+    }
+  ]
+}

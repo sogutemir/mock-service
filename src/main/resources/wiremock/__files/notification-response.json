@@ -1,0 +1,7 @@
+{
+  "notificationId": "NOT-555",
+  "type": "email",
+  "recipient": "john.doe@example.com",
+  "status": "queued",
+  "scheduledAt": "2023-01-01T10:10:00Z"
+}

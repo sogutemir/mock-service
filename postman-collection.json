@@ -1,0 +1,568 @@
+{
+  "info": {
+    "name": "Mock Microservices API",
+    "description": "Microservice mock application built with WireMock - 10 different microservice endpoints",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    },
+    {
+      "key": "docsUrl",
+      "value": "http://localhost:8081",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "👤 User Service",
+      "item": [
+        {
+          "name": "Get User by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "users", "1"]
+            },
+            "description": "Gets user information"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/users/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "users", "1"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"John Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"status\": \"active\",\n  \"createdAt\": \"2023-01-01T00:00:00Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📦 Order Service",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"amount\": 99.99,\n  \"items\": [\n    {\n      \"productId\": \"PROD-001\",\n      \"quantity\": 2,\n      \"price\": 49.99\n    }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "description": "Creates a new order"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"userId\": 1,\n  \"amount\": 99.99\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "orders"]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"ORD-12345\",\n  \"userId\": 1,\n  \"amount\": 99.99,\n  \"status\": \"confirmed\",\n  \"items\": [\n    {\n      \"productId\": \"PROD-001\",\n      \"quantity\": 2,\n      \"price\": 49.99\n    }\n  ],\n  \"createdAt\": \"2023-01-01T10:00:00Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🛍 Product Service",
+      "item": [
+        {
+          "name": "Get Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"]
+            },
+            "description": "Gets product list"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"products\": [\n    {\n      \"id\": \"PROD-001\",\n      \"name\": \"Wireless Headphones\",\n      \"price\": 49.99,\n      \"category\": \"Electronics\",\n      \"inStock\": true\n    },\n    {\n      \"id\": \"PROD-002\",\n      \"name\": \"Smart Watch\",\n      \"price\": 199.99,\n      \"category\": \"Electronics\",\n      \"inStock\": false\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "💳 Payment Service",
+      "item": [
+        {
+          "name": "Process Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"ORD-12345\",\n  \"amount\": 99.99,\n  \"method\": \"credit_card\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/payments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "payments"]
+            },
+            "description": "Ödeme işlemi gerçekleştirir"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"ORD-12345\",\n  \"amount\": 99.99,\n  \"method\": \"credit_card\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/payments",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "payments"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentId\": \"PAY-67890\",\n  \"orderId\": \"ORD-12345\",\n  \"amount\": 99.99,\n  \"status\": \"success\",\n  \"method\": \"credit_card\",\n  \"processedAt\": \"2023-01-01T10:05:00Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📊 Inventory Service",
+      "item": [
+        {
+          "name": "Get Inventory",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/inventory/PROD-001",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "inventory", "PROD-001"]
+            },
+            "description": "Ürün stok bilgisini getirir"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/inventory/PROD-001",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "inventory", "PROD-001"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"productId\": \"PROD-001\",\n  \"quantity\": 150,\n  \"reserved\": 10,\n  \"available\": 140,\n  \"lastUpdated\": \"2023-01-01T09:00:00Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🔔 Notification Service",
+      "item": [
+        {
+          "name": "Send Notification",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"email\",\n  \"recipient\": \"john.doe@example.com\",\n  \"message\": \"Your order has been confirmed\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/notifications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "notifications"]
+            },
+            "description": "Bildirim gönderir"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"email\",\n  \"recipient\": \"john.doe@example.com\",\n  \"message\": \"Your order has been confirmed\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/notifications",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "notifications"]
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"notificationId\": \"NOT-555\",\n  \"type\": \"email\",\n  \"recipient\": \"john.doe@example.com\",\n  \"status\": \"queued\",\n  \"scheduledAt\": \"2023-01-01T10:10:00Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🔐 Auth Service",
+      "item": [
+        {
+          "name": "User Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john.doe\",\n  \"password\": \"secret123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Kullanıcı girişi yapar"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"john.doe\",\n  \"password\": \"secret123\"\n}"
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "auth", "login"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...\",\n  \"userId\": 1,\n  \"expiresIn\": 3600,\n  \"tokenType\": \"Bearer\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "🚚 Shipping Service",
+      "item": [
+        {
+          "name": "Track Shipment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/shipping/TRK-789123",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "shipping", "TRK-789123"]
+            },
+            "description": "Kargo durumunu sorgular"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/shipping/TRK-789123",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "shipping", "TRK-789123"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"trackingNumber\": \"TRK-789123\",\n  \"orderId\": \"ORD-12345\",\n  \"carrier\": \"FastShip\",\n  \"status\": \"in_transit\",\n  \"estimatedDelivery\": \"2023-01-03T15:00:00Z\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📂 Catalog Service",
+      "item": [
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/catalog",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "catalog"]
+            },
+            "description": "Kategori listesini getirir"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/catalog",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "catalog"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"categories\": [\n    {\n      \"id\": \"CAT-001\",\n      \"name\": \"Electronics\",\n      \"productCount\": 150\n    },\n    {\n      \"id\": \"CAT-002\",\n      \"name\": \"Clothing\",\n      \"productCount\": 200\n    }\n  ]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📈 Analytics Service",
+      "item": [
+        {
+          "name": "Get Analytics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/analytics?period=daily&date=2023-01-01",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "analytics"],
+              "query": [
+                {
+                  "key": "period",
+                  "value": "daily"
+                },
+                {
+                  "key": "date",
+                  "value": "2023-01-01"
+                }
+              ]
+            },
+            "description": "Analitik verileri getirir"
+          },
+          "response": [
+            {
+              "name": "Success Response",
+              "originalRequest": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/api/analytics?period=daily&date=2023-01-01",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "analytics"],
+                  "query": [
+                    {
+                      "key": "period",
+                      "value": "daily"
+                    },
+                    {
+                      "key": "date",
+                      "value": "2023-01-01"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"period\": \"daily\",\n  \"date\": \"2023-01-01\",\n  \"metrics\": {\n    \"totalOrders\": 45,\n    \"totalRevenue\": 2250.75,\n    \"uniqueUsers\": 38,\n    \"averageOrderValue\": 50.02\n  }\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "📚 Documentation",
+      "item": [
+        {
+          "name": "API Documentation Home",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{docsUrl}}/docs/",
+              "host": ["{{docsUrl}}"],
+              "path": ["docs", ""]
+            },
+            "description": "API dokümantasyon ana sayfası"
+          }
+        },
+        {
+          "name": "OpenAPI YAML Specification",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{docsUrl}}/docs/openapi.yaml",
+              "host": ["{{docsUrl}}"],
+              "path": ["docs", "openapi.yaml"]
+            },
+            "description": "OpenAPI YAML spesifikasyonu"
+          }
+        },
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{docsUrl}}/docs/health",
+              "host": ["{{docsUrl}}"],
+              "path": ["docs", "health"]
+            },
+            "description": "Sistem durumu kontrolü"
+          }
+        }
+      ]
+    }
+  ]
+}

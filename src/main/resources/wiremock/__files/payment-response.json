@@ -1,0 +1,8 @@
+{
+  "paymentId": "PAY-67890",
+  "orderId": "ORD-12345",
+  "amount": 99.99,
+  "status": "success",
+  "method": "credit_card",
+  "processedAt": "2023-01-01T10:05:00Z"
+}

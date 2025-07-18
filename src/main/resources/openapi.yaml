@@ -1,0 +1,601 @@
+openapi: 3.0.3
+info:
+  title: Mock Microservices API
+  description: |
+    A microservice mock application built with WireMock. 
+    This API simulates 10 different microservices and can be used for testing environments.
+  version: 1.0.0
+  contact:
+    name: Mock Microservices Team
+    email: support@example.com
+  license:
+    name: MIT
+    url: https://opensource.org/licenses/MIT
+
+servers:
+  - url: http://localhost:8080
+    description: Local development server
+
+tags:
+  - name: User Service
+    description: User management operations
+  - name: Order Service
+    description: Order management operations
+  - name: Product Service
+    description: Product catalog operations
+  - name: Payment Service
+    description: Payment operations
+  - name: Inventory Service
+    description: Stock management operations
+  - name: Notification Service
+    description: Notification sending operations
+  - name: Auth Service
+    description: Authentication operations
+  - name: Shipping Service
+    description: Shipping tracking operations
+  - name: Catalog Service
+    description: Category management operations
+  - name: Analytics Service
+    description: Analytics and reporting operations
+
+paths:
+  /api/users/{userId}:
+    get:
+      tags:
+        - User Service
+      summary: Get user information
+      description: Returns information for the user with the specified ID
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              example:
+                id: 1
+                name: "John Doe"
+                email: "john.doe@example.com"
+                status: "active"
+                createdAt: "2023-01-01T00:00:00Z"
+
+  /api/orders:
+    post:
+      tags:
+        - Order Service
+      summary: Create new order
+      description: Creates a new order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+            example:
+              userId: 1
+              amount: 99.99
+              items:
+                - productId: "PROD-001"
+                  quantity: 2
+                  price: 49.99
+      responses:
+        '201':
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+
+  /api/products:
+    get:
+      tags:
+        - Product Service
+      summary: Get product list
+      description: Returns a list of all products
+      parameters:
+        - name: category
+          in: query
+          required: false
+          description: Category filter
+          schema:
+            type: string
+            example: "Electronics"
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of products
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductList'
+
+  /api/payments:
+    post:
+      tags:
+        - Payment Service
+      summary: Process payment
+      description: Processes payment for an order
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+            example:
+              orderId: "ORD-12345"
+              amount: 99.99
+              method: "credit_card"
+      responses:
+        '200':
+          description: Payment successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+
+  /api/inventory/{productId}:
+    get:
+      tags:
+        - Inventory Service
+      summary: Get product stock information
+      description: Returns stock status for the specified product
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          description: Product ID
+          schema:
+            type: string
+            example: "PROD-001"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Inventory'
+
+  /api/notifications:
+    post:
+      tags:
+        - Notification Service
+      summary: Send notification
+      description: Sends a notification to the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationRequest'
+            example:
+              type: "email"
+              recipient: "john.doe@example.com"
+              message: "Your order has been confirmed"
+      responses:
+        '202':
+          description: Notification queued
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+
+  /api/auth/login:
+    post:
+      tags:
+        - Auth Service
+      summary: User login
+      description: Authenticates user credentials
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+            example:
+              username: "john.doe"
+              password: "secret123"
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+
+  /api/shipping/{trackingNumber}:
+    get:
+      tags:
+        - Shipping Service
+      summary: Check shipping status
+      description: Returns shipping status using tracking number
+      parameters:
+        - name: trackingNumber
+          in: path
+          required: true
+          description: Shipping tracking number
+          schema:
+            type: string
+            example: "TRK-789123"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Shipping'
+
+  /api/catalog:
+    get:
+      tags:
+        - Catalog Service
+      summary: Get category list
+      description: Returns all product categories
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Catalog'
+
+  /api/analytics:
+    get:
+      tags:
+        - Analytics Service
+      summary: Get analytics data
+      description: Returns daily analytics data
+      parameters:
+        - name: period
+          in: query
+          required: false
+          description: Analysis period
+          schema:
+            type: string
+            enum: [daily, weekly, monthly]
+            example: "daily"
+        - name: date
+          in: query
+          required: false
+          description: Analysis date
+          schema:
+            type: string
+            format: date
+            example: "2023-01-01"
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Analytics'
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1
+        name:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          example: "john.doe@example.com"
+        status:
+          type: string
+          enum: [active, inactive, suspended]
+          example: "active"
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T00:00:00Z"
+
+    OrderRequest:
+      type: object
+      required:
+        - userId
+        - amount
+        - items
+      properties:
+        userId:
+          type: integer
+          example: 1
+        amount:
+          type: number
+          format: double
+          example: 99.99
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: string
+          example: "ORD-12345"
+        userId:
+          type: integer
+          example: 1
+        amount:
+          type: number
+          format: double
+          example: 99.99
+        status:
+          type: string
+          enum: [pending, confirmed, shipped, delivered, cancelled]
+          example: "confirmed"
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        createdAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T10:00:00Z"
+
+    OrderItem:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: "PROD-001"
+        quantity:
+          type: integer
+          example: 2
+        price:
+          type: number
+          format: double
+          example: 49.99
+
+    ProductList:
+      type: object
+      properties:
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "PROD-001"
+        name:
+          type: string
+          example: "Wireless Headphones"
+        price:
+          type: number
+          format: double
+          example: 49.99
+        category:
+          type: string
+          example: "Electronics"
+        inStock:
+          type: boolean
+          example: true
+
+    PaymentRequest:
+      type: object
+      required:
+        - orderId
+        - amount
+        - method
+      properties:
+        orderId:
+          type: string
+          example: "ORD-12345"
+        amount:
+          type: number
+          format: double
+          example: 99.99
+        method:
+          type: string
+          enum: [credit_card, debit_card, paypal, bank_transfer]
+          example: "credit_card"
+
+    Payment:
+      type: object
+      properties:
+        paymentId:
+          type: string
+          example: "PAY-67890"
+        orderId:
+          type: string
+          example: "ORD-12345"
+        amount:
+          type: number
+          format: double
+          example: 99.99
+        status:
+          type: string
+          enum: [pending, success, failed, refunded]
+          example: "success"
+        method:
+          type: string
+          example: "credit_card"
+        processedAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T10:05:00Z"
+
+    Inventory:
+      type: object
+      properties:
+        productId:
+          type: string
+          example: "PROD-001"
+        quantity:
+          type: integer
+          example: 150
+        reserved:
+          type: integer
+          example: 10
+        available:
+          type: integer
+          example: 140
+        lastUpdated:
+          type: string
+          format: date-time
+          example: "2023-01-01T09:00:00Z"
+
+    NotificationRequest:
+      type: object
+      required:
+        - type
+        - recipient
+        - message
+      properties:
+        type:
+          type: string
+          enum: [email, sms, push]
+          example: "email"
+        recipient:
+          type: string
+          example: "john.doe@example.com"
+        message:
+          type: string
+          example: "Your order has been confirmed"
+
+    Notification:
+      type: object
+      properties:
+        notificationId:
+          type: string
+          example: "NOT-555"
+        type:
+          type: string
+          example: "email"
+        recipient:
+          type: string
+          example: "john.doe@example.com"
+        status:
+          type: string
+          enum: [queued, sent, delivered, failed]
+          example: "queued"
+        scheduledAt:
+          type: string
+          format: date-time
+          example: "2023-01-01T10:10:00Z"
+
+    LoginRequest:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: "john.doe"
+        password:
+          type: string
+          format: password
+          example: "secret123"
+
+    AuthResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        userId:
+          type: integer
+          example: 1
+        expiresIn:
+          type: integer
+          example: 3600
+        tokenType:
+          type: string
+          example: "Bearer"
+
+    Shipping:
+      type: object
+      properties:
+        trackingNumber:
+          type: string
+          example: "TRK-789123"
+        orderId:
+          type: string
+          example: "ORD-12345"
+        carrier:
+          type: string
+          example: "FastShip"
+        status:
+          type: string
+          enum: [pending, picked_up, in_transit, out_for_delivery, delivered, returned]
+          example: "in_transit"
+        estimatedDelivery:
+          type: string
+          format: date-time
+          example: "2023-01-03T15:00:00Z"
+
+    Catalog:
+      type: object
+      properties:
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "CAT-001"
+        name:
+          type: string
+          example: "Electronics"
+        productCount:
+          type: integer
+          example: 150
+
+    Analytics:
+      type: object
+      properties:
+        period:
+          type: string
+          example: "daily"
+        date:
+          type: string
+          format: date
+          example: "2023-01-01"
+        metrics:
+          $ref: '#/components/schemas/Metrics'
+
+    Metrics:
+      type: object
+      properties:
+        totalOrders:
+          type: integer
+          example: 45
+        totalRevenue:
+          type: number
+          format: double
+          example: 2250.75
+        uniqueUsers:
+          type: integer
+          example: 38
+        averageOrderValue:
+          type: number
+          format: double
+          example: 50.02
